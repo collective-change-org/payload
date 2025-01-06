@@ -14,7 +14,7 @@ export interface Config {
     pages: Page;
     knowledgebase: Knowledgebase;
     media: Media;
-    categories: Category;
+    groups: Group;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -25,7 +25,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     knowledgebase: KnowledgebaseSelect<false> | KnowledgebaseSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    groups: GroupsSelect<false> | GroupsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -147,7 +147,7 @@ export interface CallToActionBlock {
 export interface Knowledgebase {
   id: number;
   title: string;
-  heroImage?: (number | null) | Media;
+  group?: (number | null) | Group;
   content: {
     root: {
       type: string;
@@ -163,8 +163,6 @@ export interface Knowledgebase {
     };
     [k: string]: unknown;
   };
-  relatedPosts?: (number | Knowledgebase)[] | null;
-  categories?: (number | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -186,6 +184,25 @@ export interface Knowledgebase {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "groups".
+ */
+export interface Group {
+  id: number;
+  title: string;
+  parent?: (number | null) | Group;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Group;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -278,25 +295,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  title: string;
-  parent?: (number | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (number | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -396,8 +394,8 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'categories';
-        value: number | Category;
+        relationTo: 'groups';
+        value: number | Group;
       } | null)
     | ({
         relationTo: 'users';
@@ -537,10 +535,8 @@ export interface MediaBlockSelect<T extends boolean = true> {
  */
 export interface KnowledgebaseSelect<T extends boolean = true> {
   title?: T;
-  heroImage?: T;
+  group?: T;
   content?: T;
-  relatedPosts?: T;
-  categories?: T;
   meta?:
     | T
     | {
@@ -657,9 +653,9 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
+ * via the `definition` "groups_select".
  */
-export interface CategoriesSelect<T extends boolean = true> {
+export interface GroupsSelect<T extends boolean = true> {
   title?: T;
   parent?: T;
   breadcrumbs?:

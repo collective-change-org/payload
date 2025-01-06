@@ -6,7 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
-import { Categories } from './collections/Categories'
+import { Groups } from './collections/Groups'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Knowledgebase } from './collections/Knowledgebase'
@@ -60,7 +60,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Knowledgebase, Media, Categories, Users],
+  collections: [Pages, Knowledgebase, Media, Groups, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

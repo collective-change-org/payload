@@ -41,7 +41,7 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
   defaultPopulate: {
     title: true,
     slug: true,
-    categories: true,
+    group: true,
     meta: {
       image: true,
       description: true,
@@ -80,9 +80,13 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
         {
           fields: [
             {
-              name: 'heroImage',
-              type: 'upload',
-              relationTo: 'media',
+              name: 'group',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              hasMany: false,
+              relationTo: 'groups',
             },
             {
               name: 'content',
@@ -104,36 +108,6 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
             },
           ],
           label: 'Content',
-        },
-        {
-          fields: [
-            {
-              name: 'relatedPosts',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              filterOptions: ({ id }) => {
-                return {
-                  id: {
-                    not_in: [id],
-                  },
-                }
-              },
-              hasMany: true,
-              relationTo: 'knowledgebase',
-            },
-            {
-              name: 'categories',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'categories',
-            },
-          ],
-          label: 'Meta',
         },
         {
           name: 'meta',
