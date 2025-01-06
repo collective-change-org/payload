@@ -27,8 +27,8 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
 
-export const Posts: CollectionConfig<'posts'> = {
-  slug: 'posts',
+export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
+  slug: 'knowledgebase',
   access: {
     create: authenticated,
     delete: authenticated,
@@ -53,7 +53,7 @@ export const Posts: CollectionConfig<'posts'> = {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'posts',
+          collection: 'knowledgebase',
           req,
         })
 
@@ -63,7 +63,7 @@ export const Posts: CollectionConfig<'posts'> = {
     preview: (data, { req }) =>
       generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'posts',
+        collection: 'knowledgebase',
         req,
       }),
     useAsTitle: 'title',
@@ -121,7 +121,7 @@ export const Posts: CollectionConfig<'posts'> = {
                 }
               },
               hasMany: true,
-              relationTo: 'posts',
+              relationTo: 'knowledgebase',
             },
             {
               name: 'categories',
