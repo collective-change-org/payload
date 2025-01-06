@@ -22,5 +22,13 @@ export const Groups: CollectionConfig = {
       required: true,
     },
     ...slugField(),
+    {
+      name: 'docOrder',
+      label: 'Document Order',
+      type: 'number',
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
 }

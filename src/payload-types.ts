@@ -194,6 +194,7 @@ export interface Group {
   title: string;
   slug?: string | null;
   slugLock?: boolean | null;
+  docOrder?: number | null;
   parent?: (number | null) | Group;
   breadcrumbs?:
     | {
@@ -661,6 +662,7 @@ export interface GroupsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   slugLock?: T;
+  docOrder?: T;
   parent?: T;
   breadcrumbs?:
     | T
