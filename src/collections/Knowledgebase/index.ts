@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Payload } from 'payload'
 
 import {
   BlocksFeature,
@@ -11,7 +11,7 @@ import {
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Banner } from '../../blocks/Banner/config'
+import { Aside } from '../../blocks/Aside/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
@@ -26,6 +26,20 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
+import { Group } from '@/payload-types'
+
+async function getGroupSlug(groupId: number, payload: Payload) {
+  const group = await payload.findByID({
+    collection: 'groups',
+    id: groupId,
+  })
+  const groupSlug = group.slug
+  const parent = group.parent as Group | null
+  if (parent) {
+    return `${await getGroupSlug(parent.id, payload)}/${groupSlug}`
+  }
+  return groupSlug
+}
 
 export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
   slug: 'knowledgebase',
@@ -41,7 +55,8 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
   defaultPopulate: {
     title: true,
     slug: true,
-    group: true,
+    slugWithGroup: true,
+    // group: false,
     meta: {
       image: true,
       description: true,
@@ -78,49 +93,47 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
       },
       hooks: {
         beforeChange: [
-          async ({ value, ...rest }) => {
-            // if the value is empty, return highest value
-            if (value === '' || value === null || value === undefined) {
-              const highestDoc = await rest.req.payload.find({
-                collection: 'knowledgebase',
-                limit: 1,
-                sort: '-docOrder',
-              })
-              if (highestDoc.totalDocs > 0) {
-                return (highestDoc.docs[0].docOrder ?? 0) + 1
-              }
-              return 0
-            }
-
-            // Check if the value is already in use
-            // If it is, increment all other documents by 1
-            const existingDocs = await rest.req.payload.find({
-              collection: 'knowledgebase',
-              where: {
-                docOrder: {
-                  equals: value,
-                },
-              },
-            })
-
-            if (existingDocs.totalDocs > 0) {
-              await Promise.all(
-                existingDocs.docs.map(async (doc) => {
-                  if (!doc.docOrder) {
-                    return
-                  }
-                  await rest.req.payload.update({
-                    collection: 'knowledgebase',
-                    id: doc.id,
-                    data: {
-                      docOrder: doc.docOrder! + 1,
-                    },
-                  })
-                }),
-              )
-            }
-            return value
-          },
+          // async ({ value, ...rest }) => {
+          //   // if the value is empty, return highest value
+          //   if (value === '' || value === null || value === undefined) {
+          //     const highestDoc = await rest.req.payload.find({
+          //       collection: 'knowledgebase',
+          //       limit: 1,
+          //       sort: '-docOrder',
+          //     })
+          //     if (highestDoc.totalDocs > 0) {
+          //       return (highestDoc.docs[0].docOrder ?? 0) + 1
+          //     }
+          //     return 0
+          //   }
+          //   // Check if the value is already in use
+          //   // If it is, increment all other documents by 1
+          //   const existingDocs = await rest.req.payload.find({
+          //     collection: 'knowledgebase',
+          //     where: {
+          //       docOrder: {
+          //         equals: value,
+          //       },
+          //     },
+          //   })
+          //   if (existingDocs.totalDocs > 0) {
+          //     await Promise.all(
+          //       existingDocs.docs.map(async (doc) => {
+          //         if (!doc.docOrder) {
+          //           return
+          //         }
+          //         await rest.req.payload.update({
+          //           collection: 'knowledgebase',
+          //           id: doc.id,
+          //           data: {
+          //             docOrder: doc.docOrder! + 1,
+          //           },
+          //         })
+          //       }),
+          //     )
+          //   }
+          //   return value
+          // },
         ],
       },
     },
@@ -151,7 +164,7 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Aside, Code, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
@@ -247,6 +260,25 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
       ],
     },
     ...slugField(),
+    {
+      name: 'slugWithGroup',
+      type: 'text',
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
+      hooks: {
+        beforeChange: [
+          async ({ data, req }) => {
+            if (data && data.group) {
+              const slug = await getGroupSlug(data.group as number, req.payload)
+              return `${slug}/${data.slug}`
+            }
+            return data?.slug ?? ''
+          },
+        ],
+      },
+    },
   ],
   hooks: {
     afterChange: [revalidatePost],

@@ -15,6 +15,11 @@ export const Groups: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+  defaultPopulate: {
+    title: true,
+    slug: true,
+    breadcrumbs: true,
+  },
   fields: [
     {
       name: 'title',

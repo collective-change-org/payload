@@ -6,20 +6,24 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-export const Banner: Block = {
-  slug: 'banner',
+export const Aside: Block = {
+  slug: 'aside',
   fields: [
     {
-      name: 'style',
+      name: 'type',
       type: 'select',
-      defaultValue: 'info',
+      defaultValue: 'note',
       options: [
-        { label: 'Info', value: 'info' },
-        { label: 'Warning', value: 'warning' },
-        { label: 'Error', value: 'error' },
-        { label: 'Success', value: 'success' },
+        { label: 'Note', value: 'note' },
+        { label: 'Tip', value: 'tip' },
+        { label: 'Caution', value: 'caution' },
+        { label: 'Danger', value: 'danger' },
       ],
       required: true,
+    },
+    {
+      type: 'text',
+      name: 'title',
     },
     {
       name: 'content',
@@ -33,5 +37,4 @@ export const Banner: Block = {
       required: true,
     },
   ],
-  interfaceName: 'BannerBlock',
 }
