@@ -70,6 +70,61 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
   },
   fields: [
     {
+      name: 'docOrder',
+      label: 'Document Order',
+      type: 'number',
+      admin: {
+        position: 'sidebar',
+      },
+      hooks: {
+        beforeChange: [
+          async ({ value, ...rest }) => {
+            // if the value is empty, return highest value
+            if (value === '' || value === null || value === undefined) {
+              const highestDoc = await rest.req.payload.find({
+                collection: 'knowledgebase',
+                limit: 1,
+                sort: '-docOrder',
+              })
+              if (highestDoc.totalDocs > 0) {
+                return (highestDoc.docs[0].docOrder ?? 0) + 1
+              }
+              return 0
+            }
+
+            // Check if the value is already in use
+            // If it is, increment all other documents by 1
+            const existingDocs = await rest.req.payload.find({
+              collection: 'knowledgebase',
+              where: {
+                docOrder: {
+                  equals: value,
+                },
+              },
+            })
+
+            if (existingDocs.totalDocs > 0) {
+              await Promise.all(
+                existingDocs.docs.map(async (doc) => {
+                  if (!doc.docOrder) {
+                    return
+                  }
+                  await rest.req.payload.update({
+                    collection: 'knowledgebase',
+                    id: doc.id,
+                    data: {
+                      docOrder: doc.docOrder! + 1,
+                    },
+                  })
+                }),
+              )
+            }
+            return value
+          },
+        ],
+      },
+    },
+    {
       name: 'title',
       type: 'text',
       required: true,

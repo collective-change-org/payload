@@ -146,6 +146,7 @@ export interface CallToActionBlock {
  */
 export interface Knowledgebase {
   id: number;
+  docOrder?: number | null;
   title: string;
   group?: (number | null) | Group;
   content: {
@@ -537,6 +538,7 @@ export interface MediaBlockSelect<T extends boolean = true> {
  * via the `definition` "knowledgebase_select".
  */
 export interface KnowledgebaseSelect<T extends boolean = true> {
+  docOrder?: T;
   title?: T;
   group?: T;
   content?: T;
