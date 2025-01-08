@@ -280,6 +280,24 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
         ],
       },
     },
+    {
+      name: 'restricted',
+      type: 'select',
+      options: [
+        {
+          label: 'Public',
+          value: 'public',
+        },
+        {
+          label: 'Members Only',
+          value: 'members',
+        },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
+      defaultValue: 'public',
+    },
   ],
   hooks: {
     afterChange: [revalidatePost],

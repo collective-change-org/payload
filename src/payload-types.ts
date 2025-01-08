@@ -183,6 +183,7 @@ export interface Knowledgebase {
   slug?: string | null;
   slugLock?: boolean | null;
   slugWithGroup?: string | null;
+  restricted?: ('public' | 'members') | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -561,6 +562,7 @@ export interface KnowledgebaseSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   slugWithGroup?: T;
+  restricted?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
