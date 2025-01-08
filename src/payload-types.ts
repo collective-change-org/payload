@@ -76,7 +76,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  layout: (CallToActionBlock | ContentBlock | MediaBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | LoginBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -382,6 +382,15 @@ export interface MediaBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LoginBlock".
+ */
+export interface LoginBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'loginBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -461,6 +470,7 @@ export interface PagesSelect<T extends boolean = true> {
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
+        loginBlock?: T | LoginBlockSelect<T>;
       };
   meta?:
     | T
@@ -532,6 +542,14 @@ export interface ContentBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LoginBlock_select".
+ */
+export interface LoginBlockSelect<T extends boolean = true> {
   id?: T;
   blockName?: T;
 }
