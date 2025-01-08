@@ -13,6 +13,7 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Aside } from '../../blocks/Aside/config'
 import { Code } from '../../blocks/Code/config'
+import { Badge } from '../../blocks/Badge/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
@@ -164,7 +165,7 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Aside, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Aside, Badge, Code, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
