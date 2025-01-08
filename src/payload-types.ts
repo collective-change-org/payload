@@ -174,6 +174,8 @@ export interface Knowledgebase {
   };
   publishedAt?: string | null;
   authors?: (number | User)[] | null;
+  badgeText?: string | null;
+  badgeVariant: 'default' | 'note' | 'danger' | 'success' | 'caution' | 'tip';
   populatedAuthors?:
     | {
         id?: string | null;
@@ -197,6 +199,8 @@ export interface Group {
   slug?: string | null;
   slugLock?: boolean | null;
   docOrder?: number | null;
+  badgeText?: string | null;
+  badgeVariant: 'default' | 'note' | 'danger' | 'success' | 'caution' | 'tip';
   parent?: (number | null) | Group;
   breadcrumbs?:
     | {
@@ -552,6 +556,8 @@ export interface KnowledgebaseSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   authors?: T;
+  badgeText?: T;
+  badgeVariant?: T;
   populatedAuthors?:
     | T
     | {
@@ -667,6 +673,8 @@ export interface GroupsSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   docOrder?: T;
+  badgeText?: T;
+  badgeVariant?: T;
   parent?: T;
   breadcrumbs?:
     | T
