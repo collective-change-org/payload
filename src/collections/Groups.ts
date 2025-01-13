@@ -35,5 +35,31 @@ export const Groups: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'badgeText',
+      label: 'Badge Text',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'badgeVariant',
+      label: 'Badge Variant',
+      type: 'select',
+      defaultValue: 'default',
+      options: [
+        { label: 'Default', value: 'default' },
+        { label: 'Note', value: 'note' },
+        { label: 'Danger', value: 'danger' },
+        { label: 'Success', value: 'success' },
+        { label: 'Caution', value: 'caution' },
+        { label: 'Tip', value: 'tip' },
+      ],
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
 }
