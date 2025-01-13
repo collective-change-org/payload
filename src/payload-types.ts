@@ -389,6 +389,21 @@ export interface MediaBlock {
  * via the `definition` "LoginBlock".
  */
 export interface LoginBlock {
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'loginBlock';
@@ -554,6 +569,7 @@ export interface MediaBlockSelect<T extends boolean = true> {
  * via the `definition` "LoginBlock_select".
  */
 export interface LoginBlockSelect<T extends boolean = true> {
+  richText?: T;
   id?: T;
   blockName?: T;
 }
