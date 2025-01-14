@@ -76,7 +76,28 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | LoginBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | LoginBlock
+    | {
+        sections: {
+          subtitle: string;
+          listItem?:
+            | {
+                title: string;
+                description: string;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'manifestBlock';
+      }
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -490,6 +511,25 @@ export interface PagesSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         loginBlock?: T | LoginBlockSelect<T>;
+        manifestBlock?:
+          | T
+          | {
+              sections?:
+                | T
+                | {
+                    subtitle?: T;
+                    listItem?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
