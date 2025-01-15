@@ -13,7 +13,6 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Aside } from '../../blocks/Aside/config'
 import { Code } from '../../blocks/Code/config'
-import { Badge } from '../../blocks/Badge/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
@@ -86,57 +85,89 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
   },
   fields: [
     {
-      name: 'docOrder',
-      label: 'Document Order',
-      type: 'number',
+      type: 'collapsible',
+      label: 'Technisches',
       admin: {
         position: 'sidebar',
       },
-      hooks: {
-        beforeChange: [
-          // async ({ value, ...rest }) => {
-          //   // if the value is empty, return highest value
-          //   if (value === '' || value === null || value === undefined) {
-          //     const highestDoc = await rest.req.payload.find({
-          //       collection: 'knowledgebase',
-          //       limit: 1,
-          //       sort: '-docOrder',
-          //     })
-          //     if (highestDoc.totalDocs > 0) {
-          //       return (highestDoc.docs[0].docOrder ?? 0) + 1
-          //     }
-          //     return 0
-          //   }
-          //   // Check if the value is already in use
-          //   // If it is, increment all other documents by 1
-          //   const existingDocs = await rest.req.payload.find({
-          //     collection: 'knowledgebase',
-          //     where: {
-          //       docOrder: {
-          //         equals: value,
-          //       },
-          //     },
-          //   })
-          //   if (existingDocs.totalDocs > 0) {
-          //     await Promise.all(
-          //       existingDocs.docs.map(async (doc) => {
-          //         if (!doc.docOrder) {
-          //           return
-          //         }
-          //         await rest.req.payload.update({
-          //           collection: 'knowledgebase',
-          //           id: doc.id,
-          //           data: {
-          //             docOrder: doc.docOrder! + 1,
-          //           },
-          //         })
-          //       }),
-          //     )
-          //   }
-          //   return value
-          // },
-        ],
+      fields: [
+        ...slugField(),
+        {
+          name: 'restricted',
+          type: 'select',
+          options: [
+            {
+              label: 'Public',
+              value: 'public',
+            },
+            {
+              label: 'Members Only',
+              value: 'members',
+            },
+          ],
+          admin: {
+            position: 'sidebar',
+          },
+          defaultValue: 'public',
+        },
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'Viselles',
+      admin: {
+        position: 'sidebar',
       },
+      fields: [
+        {
+          name: 'authors',
+          type: 'relationship',
+          admin: {
+            position: 'sidebar',
+          },
+          hasMany: true,
+          relationTo: 'users',
+        },
+        {
+          name: 'docOrder',
+          label: 'Document Order',
+          type: 'number',
+          admin: {
+            position: 'sidebar',
+          },
+          hooks: {},
+        },
+        {
+          name: 'publishedAt',
+          type: 'date',
+          admin: {
+            date: {
+              pickerAppearance: 'dayAndTime',
+            },
+            position: 'sidebar',
+          },
+          hooks: {
+            beforeChange: [
+              ({ siblingData, value }) => {
+                if (siblingData._status === 'published' && !value) {
+                  return new Date()
+                }
+                return value
+              },
+            ],
+          },
+        },
+        {
+          name: 'badge',
+          label: 'Badge',
+          type: 'relationship',
+          relationTo: 'badge',
+          hasMany: false,
+          admin: {
+            position: 'sidebar',
+          },
+        },
+      ],
     },
     {
       name: 'title',
@@ -165,7 +196,7 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Aside, Badge, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Aside, Code, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
@@ -208,64 +239,6 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
       ],
     },
     {
-      name: 'publishedAt',
-      type: 'date',
-      admin: {
-        date: {
-          pickerAppearance: 'dayAndTime',
-        },
-        position: 'sidebar',
-      },
-      hooks: {
-        beforeChange: [
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-            return value
-          },
-        ],
-      },
-    },
-    {
-      name: 'authors',
-      type: 'relationship',
-      admin: {
-        position: 'sidebar',
-      },
-      hasMany: true,
-      relationTo: 'users',
-    },
-    // This field is only used to populate the user data via the `populateAuthors` hook
-    // This is because the `user` collection has access control locked to protect user privacy
-    // GraphQL will also not return mutated user data that differs from the underlying schema
-    {
-      name: 'badgeText',
-      label: 'Badge Text',
-      type: 'text',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'badgeVariant',
-      label: 'Badge Variant',
-      type: 'select',
-      defaultValue: 'default',
-      options: [
-        { label: 'Default', value: 'default' },
-        { label: 'Note', value: 'note' },
-        { label: 'Danger', value: 'danger' },
-        { label: 'Success', value: 'success' },
-        { label: 'Caution', value: 'caution' },
-        { label: 'Tip', value: 'tip' },
-      ],
-      required: true,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
       name: 'populatedAuthors',
       type: 'array',
       access: {
@@ -286,12 +259,12 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
         },
       ],
     },
-    ...slugField(),
     {
       name: 'slugWithGroup',
       type: 'text',
       admin: {
         readOnly: true,
+        hidden: true,
         position: 'sidebar',
       },
       hooks: {
@@ -305,24 +278,6 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
           },
         ],
       },
-    },
-    {
-      name: 'restricted',
-      type: 'select',
-      options: [
-        {
-          label: 'Public',
-          value: 'public',
-        },
-        {
-          label: 'Members Only',
-          value: 'members',
-        },
-      ],
-      admin: {
-        position: 'sidebar',
-      },
-      defaultValue: 'public',
     },
   ],
   hooks: {

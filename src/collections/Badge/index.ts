@@ -1,7 +1,10 @@
-import type { Block } from 'payload'
+import type { CollectionConfig } from 'payload'
 
-export const Badge: Block = {
+export const Badge: CollectionConfig<'badge'> = {
   slug: 'badge',
+  admin: {
+    useAsTitle: 'text',
+  },
   fields: [
     {
       name: 'text',

@@ -16,6 +16,7 @@ export interface Config {
     media: Media;
     groups: Group;
     users: User;
+    badge: Badge;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -27,6 +28,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     groups: GroupsSelect<false> | GroupsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    badge: BadgeSelect<false> | BadgeSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -167,7 +169,13 @@ export interface CallToActionBlock {
  */
 export interface Knowledgebase {
   id: number;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  restricted?: ('public' | 'members') | null;
+  authors?: (number | User)[] | null;
   docOrder?: number | null;
+  publishedAt?: string | null;
+  badge?: (number | null) | Badge;
   title: string;
   group?: (number | null) | Group;
   content: {
@@ -193,23 +201,46 @@ export interface Knowledgebase {
     image?: (number | null) | Media;
     description?: string | null;
   };
-  publishedAt?: string | null;
-  authors?: (number | User)[] | null;
-  badgeText?: string | null;
-  badgeVariant: 'default' | 'note' | 'danger' | 'success' | 'caution' | 'tip';
   populatedAuthors?:
     | {
         id?: string | null;
         name?: string | null;
       }[]
     | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   slugWithGroup?: string | null;
-  restricted?: ('public' | 'members') | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "badge".
+ */
+export interface Badge {
+  id: number;
+  text?: string | null;
+  variant: 'default' | 'note' | 'danger' | 'success' | 'caution' | 'tip';
+  size: 'small' | 'medium' | 'Large';
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -329,24 +360,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: number;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
@@ -455,6 +468,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'badge';
+        value: number | Badge;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -618,7 +635,13 @@ export interface LoginBlockSelect<T extends boolean = true> {
  * via the `definition` "knowledgebase_select".
  */
 export interface KnowledgebaseSelect<T extends boolean = true> {
+  slug?: T;
+  slugLock?: T;
+  restricted?: T;
+  authors?: T;
   docOrder?: T;
+  publishedAt?: T;
+  badge?: T;
   title?: T;
   group?: T;
   content?: T;
@@ -629,20 +652,13 @@ export interface KnowledgebaseSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
-  publishedAt?: T;
-  authors?: T;
-  badgeText?: T;
-  badgeVariant?: T;
   populatedAuthors?:
     | T
     | {
         id?: T;
         name?: T;
       };
-  slug?: T;
-  slugLock?: T;
   slugWithGroup?: T;
-  restricted?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -778,6 +794,17 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "badge_select".
+ */
+export interface BadgeSelect<T extends boolean = true> {
+  text?: T;
+  variant?: T;
+  size?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
