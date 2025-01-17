@@ -81,6 +81,7 @@ export interface Page {
     | ContentBlock
     | MediaBlock
     | LoginBlock
+    | SignupBlock
     | {
         sections: {
           subtitle: string;
@@ -431,6 +432,30 @@ export interface LoginBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "signupBlock".
+ */
+export interface SignupBlock {
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'signupBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -511,6 +536,7 @@ export interface PagesSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         loginBlock?: T | LoginBlockSelect<T>;
+        signupBlock?: T | SignupBlockSelect<T>;
         manifestBlock?:
           | T
           | {
@@ -609,6 +635,15 @@ export interface MediaBlockSelect<T extends boolean = true> {
  * via the `definition` "LoginBlock_select".
  */
 export interface LoginBlockSelect<T extends boolean = true> {
+  richText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "signupBlock_select".
+ */
+export interface SignupBlockSelect<T extends boolean = true> {
   richText?: T;
   id?: T;
   blockName?: T;
