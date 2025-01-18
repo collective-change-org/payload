@@ -19,6 +19,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { LoginBlock } from '@/blocks/Login'
 import { ManifestBlock } from '@/blocks/Manifest/config'
+import { SignupBlock } from '@/blocks/Signup'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -70,7 +71,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, LoginBlock, ManifestBlock],
+              blocks: [CallToAction, Content, MediaBlock, LoginBlock, SignupBlock, ManifestBlock],
               required: true,
               admin: {
                 initCollapsed: true,
