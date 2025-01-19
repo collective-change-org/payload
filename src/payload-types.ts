@@ -916,6 +916,18 @@ export interface CodeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkCardBlock".
+ */
+export interface LinkCardBlock {
+  title: string;
+  href: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'linkCardBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {

@@ -27,6 +27,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
 import { Group } from '@/payload-types'
+import { LinkCardBlock } from '@/blocks/LinkCard'
 
 async function getGroupSlug(groupId: number, payload: Payload) {
   const group = await payload.findByID({
@@ -196,7 +197,7 @@ export const Knowledgebase: CollectionConfig<'knowledgebase'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Aside, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Aside, Code, MediaBlock, LinkCardBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
