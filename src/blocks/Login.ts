@@ -6,10 +6,8 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { Badge, Code } from 'lucide-react'
 import type { Block } from 'payload'
-import { Aside } from './Aside/config'
-import { MediaBlock } from './MediaBlock/config'
+import { ButtonBlock } from './Button'
 
 export const LoginBlock: Block = {
   slug: 'loginBlock',
@@ -31,7 +29,7 @@ export const LoginBlock: Block = {
           return [
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2'] }),
-            BlocksFeature({ blocks: [MediaBlock] }),
+            BlocksFeature({ blocks: [ButtonBlock] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
             HorizontalRuleFeature(),
