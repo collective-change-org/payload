@@ -79,6 +79,26 @@ export interface Page {
   id: number;
   title: string;
   layout: (
+    | {
+        richText: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'heroBlock';
+      }
     | ContentBlock
     | MediaBlock
     | LoginBlock
@@ -500,6 +520,13 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        heroBlock?:
+          | T
+          | {
+              richText?: T;
+              id?: T;
+              blockName?: T;
+            };
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         loginBlock?: T | LoginBlockSelect<T>;

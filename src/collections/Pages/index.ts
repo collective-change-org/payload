@@ -19,6 +19,7 @@ import {
 import { LoginBlock } from '@/blocks/Login'
 import { ManifestBlock } from '@/blocks/Manifest/config'
 import { SignupBlock } from '@/blocks/Signup'
+import { HeroBlock } from '@/blocks/Hero'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -70,7 +71,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Content, MediaBlock, LoginBlock, SignupBlock, ManifestBlock],
+              blocks: [HeroBlock, Content, MediaBlock, LoginBlock, SignupBlock, ManifestBlock],
               required: true,
               admin: {
                 initCollapsed: true,
