@@ -7,14 +7,17 @@ import {
   HorizontalRuleFeature,
 } from '@payloadcms/richtext-lexical'
 import type { Block } from 'payload'
-import { Aside } from './Aside/config'
-import { Code } from './Code/config'
-import { LinkCardBlock } from './LinkCard'
 import { MediaBlock } from './MediaBlock/config'
+import { ButtonBlock } from './Button'
 
 export const HeroBlock: Block = {
   slug: 'heroBlock',
   fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
     {
       name: 'richText',
       type: 'richText',
@@ -23,7 +26,7 @@ export const HeroBlock: Block = {
           return [
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1'] }),
-            BlocksFeature({ blocks: [Aside, Code, MediaBlock, LinkCardBlock] }),
+            BlocksFeature({ blocks: [MediaBlock, ButtonBlock] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
             HorizontalRuleFeature(),

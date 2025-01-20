@@ -79,28 +79,6 @@ export interface Page {
   id: number;
   title: string;
   layout: (
-    | {
-        richText: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'heroBlock';
-      }
-    | ContentBlock
-    | MediaBlock
     | LoginBlock
     | SignupBlock
     | {
@@ -118,6 +96,217 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'manifestBlock';
+      }
+    | {
+        color: 'green' | 'white-1' | 'white-2';
+        layout: (
+          | {
+              title: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'h1Block';
+            }
+          | {
+              title: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'h2Block';
+            }
+          | {
+              title: string;
+              richText: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'heroBlock';
+            }
+          | MediaBlock
+          | LoginBlock
+          | SignupBlock
+          | {
+              sections: {
+                subtitle: string;
+                listItem?:
+                  | {
+                      title: string;
+                      description: string;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+              }[];
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'manifestBlock';
+            }
+          | {
+              layout: (
+                | {
+                    title: string;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'h1Block';
+                  }
+                | {
+                    title: string;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'h2Block';
+                  }
+                | {
+                    title: string;
+                    richText: {
+                      root: {
+                        type: string;
+                        children: {
+                          type: string;
+                          version: number;
+                          [k: string]: unknown;
+                        }[];
+                        direction: ('ltr' | 'rtl') | null;
+                        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                        indent: number;
+                        version: number;
+                      };
+                      [k: string]: unknown;
+                    };
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'heroBlock';
+                  }
+                | MediaBlock
+                | LoginBlock
+                | SignupBlock
+                | {
+                    sections: {
+                      subtitle: string;
+                      listItem?:
+                        | {
+                            title: string;
+                            description: string;
+                            id?: string | null;
+                          }[]
+                        | null;
+                      id?: string | null;
+                    }[];
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'manifestBlock';
+                  }
+                | {
+                    link: {
+                      type?: ('reference' | 'custom') | null;
+                      newTab?: boolean | null;
+                      reference?:
+                        | ({
+                            relationTo: 'pages';
+                            value: number | Page;
+                          } | null)
+                        | ({
+                            relationTo: 'knowledgebase';
+                            value: number | Knowledgebase;
+                          } | null);
+                      url?: string | null;
+                      label: string;
+                    };
+                    hasLeftIcon: boolean;
+                    iconLeft?: string | null;
+                    hasRightIcon: boolean;
+                    iconRight?: string | null;
+                    variant: 'green' | 'orange' | 'black';
+                    size: 'small' | 'large';
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'buttonBlock';
+                  }
+                | {
+                    richText: {
+                      root: {
+                        type: string;
+                        children: {
+                          type: string;
+                          version: number;
+                          [k: string]: unknown;
+                        }[];
+                        direction: ('ltr' | 'rtl') | null;
+                        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                        indent: number;
+                        version: number;
+                      };
+                      [k: string]: unknown;
+                    };
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'emphasizedParagraph';
+                  }
+              )[];
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'indentedContainer';
+            }
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?:
+                  | ({
+                      relationTo: 'pages';
+                      value: number | Page;
+                    } | null)
+                  | ({
+                      relationTo: 'knowledgebase';
+                      value: number | Knowledgebase;
+                    } | null);
+                url?: string | null;
+                label: string;
+              };
+              hasLeftIcon: boolean;
+              iconLeft?: string | null;
+              hasRightIcon: boolean;
+              iconRight?: string | null;
+              variant: 'green' | 'orange' | 'black';
+              size: 'small' | 'large';
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'buttonBlock';
+            }
+          | {
+              richText: {
+                root: {
+                  type: string;
+                  children: {
+                    type: string;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'emphasizedParagraph';
+            }
+        )[];
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'containerBlock';
       }
   )[];
   meta?: {
@@ -137,53 +326,153 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock".
+ * via the `definition` "LoginBlock".
  */
-export interface ContentBlock {
-  columns?:
-    | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        enableLink?: boolean | null;
-        link?: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'knowledgebase';
-                value: number | Knowledgebase;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
+export interface LoginBlock {
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'content';
+  blockType: 'loginBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "signupBlock".
+ */
+export interface SignupBlock {
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'signupBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt?: string | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    square?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    small?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    medium?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    xlarge?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    og?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -290,156 +579,6 @@ export interface Group {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt?: string | null;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    square?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    medium?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    large?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    xlarge?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    og?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  media: number | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LoginBlock".
- */
-export interface LoginBlock {
-  richText: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'loginBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "signupBlock".
- */
-export interface SignupBlock {
-  richText: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'signupBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -520,15 +659,6 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        heroBlock?:
-          | T
-          | {
-              richText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
         loginBlock?: T | LoginBlockSelect<T>;
         signupBlock?: T | SignupBlockSelect<T>;
         manifestBlock?:
@@ -550,6 +680,171 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        containerBlock?:
+          | T
+          | {
+              color?: T;
+              layout?:
+                | T
+                | {
+                    h1Block?:
+                      | T
+                      | {
+                          title?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    h2Block?:
+                      | T
+                      | {
+                          title?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    heroBlock?:
+                      | T
+                      | {
+                          title?: T;
+                          richText?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    mediaBlock?: T | MediaBlockSelect<T>;
+                    loginBlock?: T | LoginBlockSelect<T>;
+                    signupBlock?: T | SignupBlockSelect<T>;
+                    manifestBlock?:
+                      | T
+                      | {
+                          sections?:
+                            | T
+                            | {
+                                subtitle?: T;
+                                listItem?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      description?: T;
+                                      id?: T;
+                                    };
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                    indentedContainer?:
+                      | T
+                      | {
+                          layout?:
+                            | T
+                            | {
+                                h1Block?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                h2Block?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                heroBlock?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      richText?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                mediaBlock?: T | MediaBlockSelect<T>;
+                                loginBlock?: T | LoginBlockSelect<T>;
+                                signupBlock?: T | SignupBlockSelect<T>;
+                                manifestBlock?:
+                                  | T
+                                  | {
+                                      sections?:
+                                        | T
+                                        | {
+                                            subtitle?: T;
+                                            listItem?:
+                                              | T
+                                              | {
+                                                  title?: T;
+                                                  description?: T;
+                                                  id?: T;
+                                                };
+                                            id?: T;
+                                          };
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                buttonBlock?:
+                                  | T
+                                  | {
+                                      link?:
+                                        | T
+                                        | {
+                                            type?: T;
+                                            newTab?: T;
+                                            reference?: T;
+                                            url?: T;
+                                            label?: T;
+                                          };
+                                      hasLeftIcon?: T;
+                                      iconLeft?: T;
+                                      hasRightIcon?: T;
+                                      iconRight?: T;
+                                      variant?: T;
+                                      size?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                emphasizedParagraph?:
+                                  | T
+                                  | {
+                                      richText?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                    buttonBlock?:
+                      | T
+                      | {
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                              };
+                          hasLeftIcon?: T;
+                          iconLeft?: T;
+                          hasRightIcon?: T;
+                          iconRight?: T;
+                          variant?: T;
+                          size?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    emphasizedParagraph?:
+                      | T
+                      | {
+                          richText?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -567,41 +862,6 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock_select".
- */
-export interface ContentBlockSelect<T extends boolean = true> {
-  columns?:
-    | T
-    | {
-        size?: T;
-        richText?: T;
-        enableLink?: T;
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock_select".
- */
-export interface MediaBlockSelect<T extends boolean = true> {
-  media?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LoginBlock_select".
  */
 export interface LoginBlockSelect<T extends boolean = true> {
@@ -615,6 +875,15 @@ export interface LoginBlockSelect<T extends boolean = true> {
  */
 export interface SignupBlockSelect<T extends boolean = true> {
   richText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock_select".
+ */
+export interface MediaBlockSelect<T extends boolean = true> {
+  media?: T;
   id?: T;
   blockName?: T;
 }
