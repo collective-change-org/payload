@@ -10,6 +10,7 @@ import { SignupBlock } from '../Signup'
 import { IndentedContainer } from './IndentedContainer'
 import { ButtonBlock } from '../Button'
 import { EmphasizedParagraph } from '../EmphasizedParagraph'
+import { ColumnContainerBlock } from './ColumnContainer'
 
 export const ContainerBlock: Block = {
   slug: 'containerBlock',
@@ -38,6 +39,7 @@ export const ContainerBlock: Block = {
         IndentedContainer,
         ButtonBlock,
         EmphasizedParagraph,
+        ColumnContainerBlock,
       ],
       required: true,
       admin: {
