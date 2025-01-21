@@ -9,6 +9,7 @@ import { MediaBlock } from '../MediaBlock/config'
 import { SignupBlock } from '../Signup'
 import { ButtonBlock } from '../Button'
 import { EmphasizedParagraph } from '../EmphasizedParagraph'
+import { LargeRichTextBlock } from '../RichText/LargeRichTextBlock'
 
 export const IndentedContainer: Block = {
   slug: 'indentedContainer',
@@ -26,6 +27,7 @@ export const IndentedContainer: Block = {
         ManifestBlock,
         ButtonBlock,
         EmphasizedParagraph,
+        LargeRichTextBlock,
       ],
       required: true,
       admin: {

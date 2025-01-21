@@ -2,8 +2,6 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Content } from '../../blocks/Content/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
@@ -16,11 +14,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { LoginBlock } from '@/blocks/Login'
-import { ManifestBlock } from '@/blocks/Manifest/config'
-import { SignupBlock } from '@/blocks/Signup'
-import { HeroBlock } from '@/blocks/Hero'
-import { H1Block } from '@/blocks/Headings/H1'
 import { ContainerBlock } from '@/blocks/Containers/Container'
 
 export const Pages: CollectionConfig<'pages'> = {
@@ -73,7 +66,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [LoginBlock, SignupBlock, ManifestBlock, ContainerBlock],
+              blocks: [ContainerBlock],
               required: true,
               admin: {
                 initCollapsed: true,
