@@ -16,7 +16,14 @@ export const Users: CollectionConfig = {
     useAsTitle: 'name',
   },
   auth: {
-    verify: true,
+    verify: {
+      generateEmailHTML: ({ req, token, user }) => {
+        // Use the token provided to allow your user to verify their account
+        const url = `https://collective-change.de/login?token=${token}`
+
+        return `Hey ${user.name || user.email}, verify your email by clicking here: ${url}`
+      },
+    },
   },
   fields: [
     {
@@ -31,6 +38,11 @@ export const Users: CollectionConfig = {
         { label: 'Team', value: 'team' },
         { label: 'Crew', value: 'crew' },
       ],
+    },
+    {
+      name: 'profileImage',
+      type: 'upload',
+      relationTo: 'media',
     },
   ],
   timestamps: true,

@@ -780,6 +780,7 @@ export interface User {
   id: number;
   name?: string | null;
   role?: ('admin' | 'team' | 'crew') | null;
+  profileImage?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1473,6 +1474,7 @@ export interface GroupsSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  profileImage?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
