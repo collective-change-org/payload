@@ -11,6 +11,9 @@ importers:
       '@payloadcms/db-postgres':
         specifier: ^3.14.0
         version: 3.14.0(@types/react@19.0.1)(payload@3.14.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))(react@19.0.0)
+      '@payloadcms/email-nodemailer':
+        specifier: ^3.18.0
+        version: 3.18.0(payload@3.14.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))
       '@payloadcms/live-preview-react':
         specifier: latest
         version: 3.14.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1286,6 +1289,12 @@ packages:
     engines: {node: ^18.20.2 || >=20.9.0}
     peerDependencies:
       payload: 3.14.0
+
+  '@payloadcms/email-nodemailer@3.18.0':
+    resolution: {integrity: sha512-8xv0GxmBWHLGWWfDssCnoo8Jcjdk0H5UpRZOgJWYRWo760DAGQL/cwQZXPMCYtDk6QkyXy4NzoTv94RVK5Yp9g==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      payload: 3.18.0
 
   '@payloadcms/graphql@3.14.0':
     resolution: {integrity: sha512-zOqEQ6JrKZ3jJve4XRq5SfUNxZaqBLMw7fKvVUI84tzOrQ3xXJSiyd2ZRrjpgGrSN/HopDChMv1slXe24jdQ5A==}
@@ -3627,6 +3636,10 @@ packages:
 
   nodemailer@6.9.10:
     resolution: {integrity: sha512-qtoKfGFhvIFW5kLfrkw2R6Nm6Ur4LNUMykyqu6n9BRKJuyQrqEGwdXXUAbwWEKt33dlWUGXb7rzmJP/p4+O+CA==}
+    engines: {node: '>=6.0.0'}
+
+  nodemailer@6.9.16:
+    resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
     engines: {node: '>=6.0.0'}
 
   noms@0.0.0:
@@ -6274,6 +6287,11 @@ snapshots:
       nodemailer: 6.9.10
       payload: 3.14.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
 
+  '@payloadcms/email-nodemailer@3.18.0(payload@3.14.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))':
+    dependencies:
+      nodemailer: 6.9.16
+      payload: 3.14.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
+
   '@payloadcms/graphql@3.14.0(graphql@16.10.0)(payload@3.14.0(graphql@16.10.0)(monaco-editor@0.52.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))(typescript@5.7.2)':
     dependencies:
       graphql: 16.10.0
@@ -8024,7 +8042,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.17.0(jiti@1.21.7)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.17.0(jiti@1.21.7)))(eslint@9.17.0(jiti@1.21.7)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -8046,7 +8064,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.17.0(jiti@1.21.7)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.17.0(jiti@1.21.7))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.19.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.17.0(jiti@1.21.7)))(eslint@9.17.0(jiti@1.21.7))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -9098,6 +9116,8 @@ snapshots:
   node-releases@2.0.19: {}
 
   nodemailer@6.9.10: {}
+
+  nodemailer@6.9.16: {}
 
   noms@0.0.0:
     dependencies:
