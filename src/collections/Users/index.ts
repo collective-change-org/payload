@@ -1,6 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
+import { render } from '@react-email/components'
+import Email, { renderSignup } from '../../../emails/signup'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -17,11 +19,13 @@ export const Users: CollectionConfig = {
   },
   auth: {
     verify: {
-      generateEmailHTML: ({ req, token, user }) => {
+      generateEmailHTML: async ({ req, token, user }) => {
         // Use the token provided to allow your user to verify their account
         const url = `https://collective-change.de/login?token=${token}`
 
-        return `Hey ${user.name || user.email}, verify your email by clicking here: ${url}`
+        const emailHtml = await renderSignup(token)
+
+        return emailHtml
       },
     },
   },

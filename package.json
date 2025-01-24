@@ -16,7 +16,8 @@
     "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "email": "email dev"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.14.0",
@@ -35,6 +36,7 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
+    "@react-email/components": "^0.0.32",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
@@ -66,6 +68,7 @@
     "eslint-config-next": "15.1.0",
     "postcss": "^8.4.38",
     "prettier": "^3.4.2",
+    "react-email": "3.0.6",
     "tailwindcss": "^3.4.3",
     "typescript": "5.7.2"
   },
