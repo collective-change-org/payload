@@ -19,6 +19,7 @@ import { getServerSideURL } from './utilities/getURL'
 import { Badge } from './collections/Badge'
 import { migrations } from './migrations'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { Events } from './collections/Events/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -64,7 +65,7 @@ export default buildConfig({
     },
     prodMigrations: migrations,
   }),
-  collections: [Pages, Knowledgebase, Media, Groups, Users, Badge],
+  collections: [Pages, Knowledgebase, Media, Groups, Users, Badge, Events],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

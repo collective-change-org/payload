@@ -10,6 +10,7 @@ import { SignupBlock } from '../Signup'
 import { ButtonBlock } from '../Button'
 import { EmphasizedParagraph } from '../EmphasizedParagraph'
 import { LargeRichTextBlock } from '../RichText/LargeRichTextBlock'
+import { UpcomingEvents } from '../UpcomingEvents'
 
 export const IndentedContainer: Block = {
   slug: 'indentedContainer',
@@ -28,6 +29,7 @@ export const IndentedContainer: Block = {
         ButtonBlock,
         EmphasizedParagraph,
         LargeRichTextBlock,
+        UpcomingEvents,
       ],
       required: true,
       admin: {

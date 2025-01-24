@@ -17,6 +17,7 @@ export interface Config {
     groups: Group;
     users: User;
     badge: Badge;
+    events: Event;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -29,6 +30,7 @@ export interface Config {
     groups: GroupsSelect<false> | GroupsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     badge: BadgeSelect<false> | BadgeSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -253,6 +255,13 @@ export interface Page {
                 id?: string | null;
                 blockName?: string | null;
                 blockType: 'largeRichTextBlock';
+              }
+            | {
+                title: string;
+                events?: (number | null) | Event;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'upcomingEvents';
               }
           )[];
           id?: string | null;
@@ -482,6 +491,13 @@ export interface Page {
                             blockName?: string | null;
                             blockType: 'largeRichTextBlock';
                           }
+                        | {
+                            title: string;
+                            events?: (number | null) | Event;
+                            id?: string | null;
+                            blockName?: string | null;
+                            blockType: 'upcomingEvents';
+                          }
                       )[];
                       id?: string | null;
                       blockName?: string | null;
@@ -554,6 +570,13 @@ export interface Page {
                       blockName?: string | null;
                       blockType: 'largeRichTextBlock';
                     }
+                  | {
+                      title: string;
+                      events?: (number | null) | Event;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'upcomingEvents';
+                    }
                 )[];
                 id?: string | null;
               }[]
@@ -582,6 +605,13 @@ export interface Page {
           id?: string | null;
           blockName?: string | null;
           blockType: 'largeRichTextBlock';
+        }
+      | {
+          title: string;
+          events?: (number | null) | Event;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'upcomingEvents';
         }
     )[];
     id?: string | null;
@@ -832,6 +862,22 @@ export interface Group {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  description?: string | null;
+  date: string;
+  time?: string | null;
+  location?: string | null;
+  image?: (number | null) | Media;
+  attendees?: (number | User)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -860,6 +906,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'badge';
         value: number | Badge;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1049,6 +1099,14 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
+                                upcomingEvents?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      events?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
                               };
                           id?: T;
                           blockName?: T;
@@ -1220,6 +1278,14 @@ export interface PagesSelect<T extends boolean = true> {
                                                         id?: T;
                                                         blockName?: T;
                                                       };
+                                                  upcomingEvents?:
+                                                    | T
+                                                    | {
+                                                        title?: T;
+                                                        events?: T;
+                                                        id?: T;
+                                                        blockName?: T;
+                                                      };
                                                 };
                                             id?: T;
                                             blockName?: T;
@@ -1260,6 +1326,14 @@ export interface PagesSelect<T extends boolean = true> {
                                             id?: T;
                                             blockName?: T;
                                           };
+                                      upcomingEvents?:
+                                        | T
+                                        | {
+                                            title?: T;
+                                            events?: T;
+                                            id?: T;
+                                            blockName?: T;
+                                          };
                                     };
                                 id?: T;
                               };
@@ -1271,6 +1345,14 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           title?: T;
                           richText?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    upcomingEvents?:
+                      | T
+                      | {
+                          title?: T;
+                          events?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1495,6 +1577,21 @@ export interface BadgeSelect<T extends boolean = true> {
   text?: T;
   variant?: T;
   size?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  date?: T;
+  time?: T;
+  location?: T;
+  image?: T;
+  attendees?: T;
   updatedAt?: T;
   createdAt?: T;
 }

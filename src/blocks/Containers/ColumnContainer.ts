@@ -11,6 +11,7 @@ import { IndentedContainer } from './IndentedContainer'
 import { ButtonBlock } from '../Button'
 import { EmphasizedParagraph } from '../EmphasizedParagraph'
 import { LargeRichTextBlock } from '../RichText/LargeRichTextBlock'
+import { UpcomingEvents } from '../UpcomingEvents'
 
 export const ColumnContainerBlock: Block = {
   slug: 'columnContainerBlock',
@@ -34,6 +35,7 @@ export const ColumnContainerBlock: Block = {
             ButtonBlock,
             EmphasizedParagraph,
             LargeRichTextBlock,
+            UpcomingEvents,
           ],
           required: true,
           label: false,
