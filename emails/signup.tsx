@@ -53,7 +53,10 @@ export default function Email(props: { token: string }) {
           </Section>
           <Section>
             <Row>
-              <Heading as="h1" className="text-2xl font-[Poppins]">
+              <Heading
+                as="h1"
+                className="text-2xl font-[Poppins] leading-snug uppercase text-green-dark"
+              >
                 Wilkommen in der Crew! Bestätige deine E-Mail!
               </Heading>
             </Row>
@@ -64,7 +67,7 @@ export default function Email(props: { token: string }) {
               </Text>
             </Row>
             <Row>
-              <Column className="border-orange-dark border-0 border-l-4 bg-[#FF9C55] border-solid inline-block px-[16px] py-[8px] text-green-black">
+              <Column className="border-orange-dark border-0 border-l-4 bg-orange-light/50 border-solid inline-block px-4 py-2 text-green-black">
                 Wenn du dir einen Account erstellst, wirst du automatisch zur Newsletter-Liste
                 hinzugefügt. Wenn du das nicht möchtest, bestätige bitte nicht deine E-Mail-Adresse.
               </Column>
