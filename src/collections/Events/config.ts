@@ -1,9 +1,17 @@
+import { authenticated } from '@/access/authenticated'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import type { CollectionConfig } from 'payload'
 
 export const Events: CollectionConfig<'events'> = {
   slug: 'events',
   admin: {
     useAsTitle: 'title',
+  },
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: () => true,
+    update: authenticated,
   },
   fields: [
     {
@@ -66,4 +74,12 @@ export const Events: CollectionConfig<'events'> = {
       hasMany: true,
     },
   ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 500, // We set this interval for optimal live preview
+      },
+    },
+    maxPerDoc: 50,
+  },
 }
