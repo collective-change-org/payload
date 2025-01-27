@@ -867,10 +867,53 @@ export interface Group {
 export interface Event {
   id: number;
   title: string;
-  description?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   date: string;
   time?: string | null;
-  location?: string | null;
+  left?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  right?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   image?: (number | null) | Media;
   attendees?: (number | User)[] | null;
   updatedAt: string;
@@ -1590,7 +1633,8 @@ export interface EventsSelect<T extends boolean = true> {
   description?: T;
   date?: T;
   time?: T;
-  location?: T;
+  left?: T;
+  right?: T;
   image?: T;
   attendees?: T;
   updatedAt?: T;

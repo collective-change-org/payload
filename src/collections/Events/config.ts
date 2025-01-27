@@ -1,7 +1,16 @@
 import { authenticated } from '@/access/authenticated'
-import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
-import { User } from '@/payload-types'
+import {
+  lexicalEditor,
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+} from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
+
+const richTextConfig = lexicalEditor({
+  features: ({ rootFeatures }) => {
+    return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
+  },
+})
 
 export const Events: CollectionConfig<'events'> = {
   slug: 'events',
@@ -22,7 +31,9 @@ export const Events: CollectionConfig<'events'> = {
     },
     {
       name: 'description',
-      type: 'textarea',
+      type: 'richText',
+      required: true,
+      editor: richTextConfig,
     },
     {
       type: 'collapsible',
@@ -58,8 +69,19 @@ export const Events: CollectionConfig<'events'> = {
           ],
         },
         {
-          name: 'location',
-          type: 'text',
+          type: 'row',
+          fields: [
+            {
+              name: 'left',
+              type: 'richText',
+              editor: richTextConfig,
+            },
+            {
+              name: 'right',
+              type: 'richText',
+              editor: richTextConfig,
+            },
+          ],
         },
         {
           name: 'image',
