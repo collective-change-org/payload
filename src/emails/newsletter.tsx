@@ -31,19 +31,50 @@ const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => {
 
 			if (!children?.length) {
 				return (
-					<Text>
+					<p>
 						<br />
-					</Text>
+					</p>
 				)
 			}
 
-			return <Text>{children}</Text>
+			return <p>{children}</p>
 		},
 
 		blocks: {
 			// myTextBlock is the slug of the block
 			// myTextBlock: ({ node }) => <div style={{ backgroundColor: 'red' }}>{node.fields.text}</div>,
 		},
+	}
+}
+
+type BlockType = Newsletter["body"][0]
+
+function blockTypeToComponent(block: BlockType) {
+	switch (block.blockType) {
+		case "h1Block":
+			return (
+				<Heading
+					as="h1"
+					className="text-green-dark font-[Poppins] text-2xl uppercase leading-snug">
+					{block.title}
+				</Heading>
+			)
+		case "h2Block":
+			return (
+				<Heading
+					as="h2"
+					className="text-green-dark font-[Poppins] text-xl uppercase leading-snug">
+					{block.title}
+				</Heading>
+			)
+		case "plainRichTextBlock":
+			return (
+				<RichText converters={jsxConverters} data={block.richText} />
+				// <p>dsf</p>
+				// <Text>{lexicalHTML}</Text>
+			)
+		default:
+			return null
 	}
 }
 
@@ -117,50 +148,10 @@ export default function Email(props: {
 					{body.map((section, index) => {
 						return (
 							<Row key={index}>
-								{(() => {
-									switch (section.blockType) {
-										case "h1Block":
-											return (
-												<Heading
-													as="h1"
-													className="text-green-dark font-[Poppins] text-2xl uppercase leading-snug">
-													{section.title}
-												</Heading>
-											)
-										case "h2Block":
-											return (
-												<Heading
-													as="h2"
-													className="text-green-dark font-[Poppins] text-xl uppercase leading-snug">
-													{section.title}
-												</Heading>
-											)
-										case "plainRichTextBlock":
-											return (
-												<RichText
-													converters={jsxConverters}
-													data={section.richText}
-												/>
-												// <p>dsf</p>
-												// <Text>{lexicalHTML}</Text>
-											)
-										default:
-											return null
-									}
-								}).call(this)}
+								{blockTypeToComponent(section)}
 							</Row>
 						)
 					})}
-					{/* <Row className="mt-[16px]">
-							<Column>
-								<EmailButton
-									href={url}
-									color="green"
-									size="small">
-									Email Button
-								</EmailButton>
-							</Column>
-						</Row> */}
 				</Section>
 			</Container>
 			<Section className="mt-10 text-center">
