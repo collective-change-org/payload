@@ -20,6 +20,7 @@ import { Badge } from './collections/Badge'
 import { migrations } from './migrations'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { Events } from './collections/Events/config'
+import { NotificationSettings } from './collections/NotificationSettings/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -65,7 +66,7 @@ export default buildConfig({
     },
     prodMigrations: migrations,
   }),
-  collections: [Pages, Knowledgebase, Media, Groups, Users, Badge, Events],
+  collections: [Pages, Knowledgebase, Media, Groups, Users, Badge, Events, NotificationSettings],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

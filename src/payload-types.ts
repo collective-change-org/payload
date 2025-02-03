@@ -18,11 +18,16 @@ export interface Config {
     users: User;
     badge: Badge;
     events: Event;
+    'notification-settings': NotificationSetting;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    users: {
+      notificationSettings: 'notification-settings';
+    };
+  };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     knowledgebase: KnowledgebaseSelect<false> | KnowledgebaseSelect<true>;
@@ -31,6 +36,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     badge: BadgeSelect<false> | BadgeSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    'notification-settings': NotificationSettingsSelect<false> | NotificationSettingsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -811,6 +817,10 @@ export interface User {
   name?: string | null;
   role?: ('admin' | 'team' | 'crew') | null;
   profileImage?: (number | null) | Media;
+  notificationSettings?: {
+    docs?: (number | NotificationSetting)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -823,6 +833,17 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-settings".
+ */
+export interface NotificationSetting {
+  id: number;
+  user: number | User;
+  type?: ('newsletter' | 'event') | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -954,6 +975,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'notification-settings';
+        value: number | NotificationSetting;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1601,6 +1626,7 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
   profileImage?: T;
+  notificationSettings?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1640,6 +1666,16 @@ export interface EventsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-settings_select".
+ */
+export interface NotificationSettingsSelect<T extends boolean = true> {
+  user?: T;
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

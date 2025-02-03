@@ -45,6 +45,12 @@ export const Users: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
     },
+    {
+      name: 'notificationSettings',
+      type: 'join',
+      collection: 'notification-settings',
+      on: 'user',
+    },
   ],
   timestamps: true,
 }
