@@ -27,85 +27,85 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-	routes: {
-		admin: "/",
-	},
-	admin: {
-		components: {},
-		importMap: {
-			baseDir: path.resolve(dirname),
-		},
-		user: Users.slug,
-		// livePreview: {
-		//   breakpoints: [
-		//     {
-		//       label: 'Mobile',
-		//       name: 'mobile',
-		//       width: 375,
-		//       height: 667,
-		//     },
-		//     {
-		//       label: 'Tablet',
-		//       name: 'tablet',
-		//       width: 768,
-		//       height: 1024,
-		//     },
-		//     {
-		//       label: 'Desktop',
-		//       name: 'desktop',
-		//       width: 1440,
-		//       height: 900,
-		//     },
-		//   ],
-		// },
-	},
-	// This config helps us configure global or default features that the other editors can inherit
-	editor: defaultLexical,
-	db: postgresAdapter({
-		pool: {
-			connectionString: process.env.DATABASE_URI || "",
-		},
-		prodMigrations: migrations,
-	}),
-	collections: [
-		Pages,
-		Knowledgebase,
-		Media,
-		Groups,
-		Users,
-		Badge,
-		Events,
-		NotificationSettings,
-		Newsletter,
-	],
-	cors: [getServerSideURL()].filter(Boolean),
-	globals: [Header, Footer],
-	plugins: [
-		...plugins,
-		// storage-adapter-placeholder
-	],
-	secret: process.env.PAYLOAD_SECRET,
+  routes: {
+    admin: "/",
+  },
+  admin: {
+    components: {},
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
+    user: Users.slug,
+    // livePreview: {
+    //   breakpoints: [
+    //     {
+    //       label: 'Mobile',
+    //       name: 'mobile',
+    //       width: 375,
+    //       height: 667,
+    //     },
+    //     {
+    //       label: 'Tablet',
+    //       name: 'tablet',
+    //       width: 768,
+    //       height: 1024,
+    //     },
+    //     {
+    //       label: 'Desktop',
+    //       name: 'desktop',
+    //       width: 1440,
+    //       height: 900,
+    //     },
+    //   ],
+    // },
+  },
+  // This config helps us configure global or default features that the other editors can inherit
+  editor: defaultLexical,
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || "",
+    },
+    prodMigrations: migrations,
+  }),
+  collections: [
+    Pages,
+    Knowledgebase,
+    Media,
+    Groups,
+    Users,
+    Badge,
+    Events,
+    NotificationSettings,
+    Newsletter,
+  ],
+  cors: [getServerSideURL()].filter(Boolean),
+  globals: [Header, Footer],
+  plugins: [
+    ...plugins,
+    // storage-adapter-placeholder
+  ],
+  secret: process.env.PAYLOAD_SECRET,
 
-	sharp,
-	typescript: {
-		outputFile: path.resolve(dirname, "payload-types.ts"),
-	},
-	email: nodemailerAdapter({
-		defaultFromAddress: process.env.SMTP_USER || "",
-		defaultFromName: "Collective Change",
-		// Nodemailer transportOptions
-		transportOptions: {
-			host: process.env.SMTP_HOST,
-			port: 587,
-			auth: {
-				user: process.env.SMTP_USER,
-				pass: process.env.SMTP_PASS,
-			},
-			dkim: {
-				domainName: "collective-change.de",
-				keySelector: "payload",
-				privateKey: process.env.DKIM_PRIVATE_KEY,
-			},
-		},
-	}),
+  sharp,
+  typescript: {
+    outputFile: path.resolve(dirname, "payload-types.ts"),
+  },
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.SMTP_USER || "",
+    defaultFromName: "Collective Change",
+    // Nodemailer transportOptions
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: 587,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      dkim: {
+        domainName: "collective-change.de",
+        keySelector: "payload",
+        privateKey: process.env.DKIM_PRIVATE_KEY
+      },
+    },
+  }),
 })
