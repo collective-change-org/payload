@@ -2,6 +2,13 @@ import type { CollectionConfig } from "payload"
 
 import { authenticated } from "@/access/authenticated"
 import { renderSignup } from "@/emails/signup"
+import { z } from "zod"
+import { User } from "@/payload-types"
+
+const modifySchema = z.object({
+	name: z.string().optional(),
+	profileImage: z.number().optional(),
+})
 
 export const Users: CollectionConfig = {
 	slug: "users",
@@ -53,4 +60,54 @@ export const Users: CollectionConfig = {
 		},
 	],
 	timestamps: true,
+	endpoints: [
+		{
+			path: "/:id/",
+			method: "put",
+			handler: async (req) => {
+				const id = req.query.id as string
+
+				const { success, data } = modifySchema.safeParse(req.body)
+
+				if (!success || !id) {
+					return Response.error()
+				}
+
+				const user = await req.payload.findByID({
+					id: id,
+					collection: "users",
+				})
+
+				const updateData: Partial<User> = {}
+
+				if (data.name) {
+					updateData.name = data.name
+				}
+
+				if (data.profileImage) {
+					// Delete the old profile image
+					if (user.profileImage) {
+						req.payload.delete({
+							collection: "media",
+							id:
+								typeof user.profileImage === "number"
+									? user.profileImage
+									: user.profileImage.id,
+						})
+					}
+
+					// Set the new profile image
+					updateData.profileImage = data.profileImage
+				}
+
+				req.payload.update({
+					id: id,
+					collection: "users",
+					data: updateData,
+				})
+
+				return Response.json("ok")
+			},
+		},
+	],
 }
