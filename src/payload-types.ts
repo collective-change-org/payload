@@ -263,6 +263,7 @@ export interface Page {
                 blockName?: string | null;
                 blockType: 'upcomingEvents';
               }
+            | AccountBlock
           )[];
           id?: string | null;
           blockName?: string | null;
@@ -498,6 +499,7 @@ export interface Page {
                             blockName?: string | null;
                             blockType: 'upcomingEvents';
                           }
+                        | AccountBlock
                       )[];
                       id?: string | null;
                       blockName?: string | null;
@@ -577,6 +579,7 @@ export interface Page {
                       blockName?: string | null;
                       blockType: 'upcomingEvents';
                     }
+                  | AccountBlock
                 )[];
                 id?: string | null;
               }[]
@@ -613,6 +616,7 @@ export interface Page {
           blockName?: string | null;
           blockType: 'upcomingEvents';
         }
+      | AccountBlock
     )[];
     id?: string | null;
     blockName?: string | null;
@@ -922,6 +926,15 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccountBlock".
+ */
+export interface AccountBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accountBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -1151,6 +1164,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
+                                accountBlock?: T | AccountBlockSelect<T>;
                               };
                           id?: T;
                           blockName?: T;
@@ -1330,6 +1344,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                         id?: T;
                                                         blockName?: T;
                                                       };
+                                                  accountBlock?: T | AccountBlockSelect<T>;
                                                 };
                                             id?: T;
                                             blockName?: T;
@@ -1378,6 +1393,7 @@ export interface PagesSelect<T extends boolean = true> {
                                             id?: T;
                                             blockName?: T;
                                           };
+                                      accountBlock?: T | AccountBlockSelect<T>;
                                     };
                                 id?: T;
                               };
@@ -1400,6 +1416,7 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    accountBlock?: T | AccountBlockSelect<T>;
                   };
               id?: T;
               blockName?: T;
@@ -1441,6 +1458,14 @@ export interface LoginBlockSelect<T extends boolean = true> {
  * via the `definition` "signupBlock_select".
  */
 export interface SignupBlockSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccountBlock_select".
+ */
+export interface AccountBlockSelect<T extends boolean = true> {
   id?: T;
   blockName?: T;
 }

@@ -13,6 +13,7 @@ import { EmphasizedParagraph } from '../EmphasizedParagraph'
 import { ColumnContainerBlock } from './ColumnContainer'
 import { LargeRichTextBlock } from '../RichText/LargeRichTextBlock'
 import { UpcomingEvents } from '../UpcomingEvents'
+import { AccountBlock } from '../Account'
 
 export const ContainerBlock: Block = {
   slug: 'containerBlock',
@@ -44,6 +45,7 @@ export const ContainerBlock: Block = {
         ColumnContainerBlock,
         LargeRichTextBlock,
         UpcomingEvents,
+        AccountBlock,
       ],
       required: true,
       admin: {
