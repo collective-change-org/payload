@@ -12,6 +12,7 @@ import { ButtonBlock } from '../Button'
 import { EmphasizedParagraph } from '../EmphasizedParagraph'
 import { LargeRichTextBlock } from '../RichText/LargeRichTextBlock'
 import { UpcomingEvents } from '../UpcomingEvents'
+import { AccountBlock } from '../Account'
 
 export const ColumnContainerBlock: Block = {
   slug: 'columnContainerBlock',
@@ -36,6 +37,7 @@ export const ColumnContainerBlock: Block = {
             EmphasizedParagraph,
             LargeRichTextBlock,
             UpcomingEvents,
+            AccountBlock,
           ],
           required: true,
           label: false,
