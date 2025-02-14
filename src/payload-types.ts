@@ -18,11 +18,17 @@ export interface Config {
     users: User;
     badge: Badge;
     events: Event;
+    'notification-settings': NotificationSetting;
+    newsletter: Newsletter;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    users: {
+      notificationSettings: 'notification-settings';
+    };
+  };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     knowledgebase: KnowledgebaseSelect<false> | KnowledgebaseSelect<true>;
@@ -31,6 +37,8 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     badge: BadgeSelect<false> | BadgeSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    'notification-settings': NotificationSettingsSelect<false> | NotificationSettingsSelect<true>;
+    newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -815,6 +823,10 @@ export interface User {
   name?: string | null;
   role?: ('admin' | 'team' | 'crew') | null;
   profileImage?: (number | null) | Media;
+  notificationSettings?: {
+    docs?: (number | NotificationSetting)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -827,6 +839,18 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-settings".
+ */
+export interface NotificationSetting {
+  id: number;
+  user: number | User;
+  type?: ('newsletter' | 'event') | null;
+  nonce?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -935,6 +959,51 @@ export interface AccountBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter".
+ */
+export interface Newsletter {
+  id: number;
+  subject: string;
+  body: (
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'h1Block';
+      }
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'h2Block';
+      }
+    | {
+        richText: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'plainRichTextBlock';
+      }
+  )[];
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -967,6 +1036,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'notification-settings';
+        value: number | NotificationSetting;
+      } | null)
+    | ({
+        relationTo: 'newsletter';
+        value: number | Newsletter;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1626,6 +1703,7 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
   profileImage?: T;
+  notificationSettings?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1662,6 +1740,52 @@ export interface EventsSelect<T extends boolean = true> {
   right?: T;
   image?: T;
   attendees?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notification-settings_select".
+ */
+export interface NotificationSettingsSelect<T extends boolean = true> {
+  user?: T;
+  type?: T;
+  nonce?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter_select".
+ */
+export interface NewsletterSelect<T extends boolean = true> {
+  subject?: T;
+  body?:
+    | T
+    | {
+        h1Block?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        h2Block?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        plainRichTextBlock?:
+          | T
+          | {
+              richText?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
